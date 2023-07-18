@@ -2,16 +2,16 @@
 
 using namespace std;
 
-double func(double x) {
-    return x * x - 7;
+double func(double x, double i, double n) {
+    return pow(x, n) - i;
 }
 
-void bisection(double xl, double xr) {
+void bisection(double x, double n,double xl, double xr) {
     int iter = 0;
     double es = 0;
     double ea = 0;
     
-    if (func(xl) * func(xr) >= 0) {
+    if (func(xl, x, n) * func(xr, x, n) >= 0) {
         cout << "f(xl) and f(xr) must be opposite in sign.";
         return;
     }
@@ -24,15 +24,15 @@ void bisection(double xl, double xr) {
         xm = (xl + xr) / 2;
         iter++;
         // if f(xm) is root
-        if(func(xm) == 0) break;
+        if(func(xm, x, n) == 0) break;
 
         // step 4 check Coverage criteria
         ea = abs((xm-xmold)/xm)*100;
         if (ea <= es) break;
-        // cout << iter << ": " << "f(" << xm << ") = " << func(xm) << " ES = " << ea << "% ; " << xl << " -> " << xr << endl;
+        // cout << iter << ": " << "f(" << xm << ") = " << func(xm, x, n) << " ES = " << ea << "% ; " << xl << " -> " << xr << endl;
 
         // step 2 compute product; step 3 set new
-        if (func(xm) * func(xr) > 0) xr = xm;
+        if (func(xm, x, n) * func(xr, x, n) > 0) xr = xm;
         else xl = xm;
     }
     double bisect = xm;
@@ -40,9 +40,15 @@ void bisection(double xl, double xr) {
 }
 
 int main() {
-    cout << fixed << setprecision(6);
+    cout << fixed << setprecision(4);
+    int x, n;
+    double xl, xr;
+    cin >> x >> n;
+    // 0 <= xl <= xr <= 1000000
+    xl = 0;
+    xr = 1000000;
 
-    bisection(0, 10);
+    bisection(x, n,xl, xr);
 
     return 0;
 }

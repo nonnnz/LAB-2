@@ -34,7 +34,7 @@ void bisection(double xl, double xr) {
         // step 4 check Coverage criteria
         ea = abs((xm-xmold)/xm)*100;
         if (ea <= es) break;
-        cout << iter << ": " << "f(" << xm << ") = " << func(xm) << " ES = " << ea << "% ; " << xl << " -> " << xr << endl;
+        // cout << iter << ": " << "f(" << xm << ") = " << func(xm) << " ES = " << ea << "% ; " << xl << " -> " << xr << endl;
     }
     double bisect = xm;
     cout << bisect;
