@@ -8,8 +8,8 @@ double func(double x, double i, double n) {
 
 void bisection(double x, double n,double xl, double xr) {
     int iter = 0;
-    double es = 0;
-    double ea = 0;
+    double es = 0; // Desired relative error tolerance
+    double ea = 0; // Approximate relative error
     
     if (func(xl, x, n) * func(xr, x, n) >= 0) {
         cout << "f(xl) and f(xr) must be opposite in sign.";
