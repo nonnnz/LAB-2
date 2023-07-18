@@ -9,7 +9,7 @@ double func(double x) {
 void bisection(double xl, double xr) {
     int iter = 0;
     double es = 0;
-    double ea = 100;
+    double ea = 0;
     
     if (func(xl) * func(xr) >= 0) {
         cout << "f(xl) and f(xr) must be opposite in sign.";
