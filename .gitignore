@@ -219,3 +219,5 @@ build/
 
 # Visual Studio Code specific files
 .vscode/
+
+*.png
