@@ -17,7 +17,7 @@ void bisection(double xl, double xr) {
     }
     
     double xm = xl;
-    double xmold = xm;
+    double xmold = 0;
     while(1) {
         xmold = xm;
         // step 1 find middle point

@@ -3,7 +3,7 @@
 using namespace std;
 
 double func(double x) {
-    return 43 * x - 1;
+    return x * x - 7;
 }
 
 void bisection(double xl, double xr) {
@@ -26,15 +26,15 @@ void bisection(double xl, double xr) {
         // if f(xm) is root
         if(func(xm) == 0) break;
 
-        // step 2 compute product; step 3 set new
-        
-        if (func(xm) * func(xr) > 0) xr = xm;
-        else xl = xm;
-
         // step 4 check Coverage criteria
         ea = abs((xm-xmold)/xm)*100;
         if (ea <= es) break;
         cout << iter << ": " << "f(" << xm << ") = " << func(xm) << " ES = " << ea << "% ; " << xl << " -> " << xr << endl;
+
+        // step 2 compute product; step 3 set new
+        
+        if (func(xm) * func(xr) > 0) xr = xm;
+        else xl = xm;
     }
     double bisect = xm;
     cout << bisect;
@@ -43,7 +43,7 @@ void bisection(double xl, double xr) {
 int main() {
     cout << fixed << setprecision(6);
 
-    bisection(0.02, 0.03);
+    bisection(0, 10);
 
     return 0;
 }
