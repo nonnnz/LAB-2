@@ -6,15 +6,15 @@ import javax.swing.JOptionPane;
 
 public class Lab1_1 {
     static void console() {
-    NumberFormat formatter = new DecimalFormat("#0.00");  
-    Scanner input = new Scanner(System.in);
-    System.out.print("Enter Fahrenheit: ");
-    double Fahrenheit = input.nextDouble();
-    double Celsius = (5.0/9)*(Fahrenheit-32);
-    
-    // Display results
-    System.out.println("The Celsius is " + formatter.format(Celsius) + " degrees Celsius");
-    input.close();
+        NumberFormat formatter = new DecimalFormat("#0.00");  
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter Fahrenheit: ");
+        double Fahrenheit = input.nextDouble();
+        double Celsius = (5.0/9)*(Fahrenheit-32);
+        
+        // Display results
+        System.out.println("The Celsius is " + formatter.format(Celsius) + " degrees Celsius");
+        input.close();
     }
     static void dialogbox() {
         NumberFormat formatter = new DecimalFormat("#0.00");  
