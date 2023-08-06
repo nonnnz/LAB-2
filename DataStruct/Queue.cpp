@@ -1,57 +1,102 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 
 using namespace std;
 
 template <typename Type>
 class Queue {
-private:
-    int queue_size;
-    int ifront;
-    int iback;
-    int array_capacity;
-    Type *array;
-
-public:
-    Queue(int capacity = 10) : queue_size(0), ifront(0), iback(-1), array_capacity(capacity) {
-        array = new Type[capacity];
-    }
-
-    ~Queue() {
-        delete[] array;
-    }
-
-    bool empty() const {
-        return queue_size == 0;
-    }
-
-    Type front() const {
-        if (empty()) {
-            throw runtime_error("Queue is empty.");
-        }
-        return array[ifront];
-    }
-
-    void push(const Type &value) {
-        if (queue_size == array_capacity) {
-            throw runtime_error("Queue is full.");
-        }
-        iback = (iback + 1) % array_capacity;
-        array[iback] = value;
-        ++queue_size;
-    }
-
-    Type pop() {
-        if (empty()) {
-            throw runtime_error("Queue is empty.");
-        }
-        Type front_value = array[ifront];
-        ifront = (ifront + 1) % array_capacity;
-        --queue_size;
-        return front_value;
-    }
+	private:
+		int queue_size;
+		int ifront;
+		int iback;
+		int array_capacity;
+		Type *array;
+	
+	public:
+		Queue(int = 10);
+		~Queue();
+		bool empty() const;
+		Type front() const;
+		void push(Type const &);
+		Type pop();
+		void print(Queue* q);
 };
 
+template <typename Type>
+Queue<Type>::Queue(int n):
+	queue_size(0),
+	iback(-1),
+	ifront(0),
+	array_capacity(max(1,n)),
+	array(new Type[array_capacity]) {
+		// empty
+	}
+
+template <typename Type>
+Queue<Type>::~Queue() {
+	delete[] array;
+}
+
+template <typename Type>
+bool Queue<Type>::empty() const {
+	return (queue_size == 0);
+}
+
+template <typename Type>
+Type Queue<Type>::front() const {
+	if(empty()) {
+		throw "...";
+	}
+	return array[ifront];
+}
+
+template <typename Type>
+void Queue<Type>::push(Type const &obj) {
+	if(queue_size == array_capacity) {
+		throw "...";
+	}
+	
+	++iback;
+	array[iback] = obj;
+	++queue_size;
+}
+
+template <typename Type>
+Type Queue<Type>::pop() {
+	if(empty()) {
+		throw "...";
+	}
+	
+	--queue_size;
+	++ifront;
+	
+	return array[ifront - 1];
+}
+
+template <typename Type>
+void Queue<Type>::print(Queue* q) {
+	for(int i = q->ifront ; i < q->queue_size; i++) {
+		if(i == q->queue_size - 1) cout << q->array[i] << endl;
+		else cout << q->array[i] << " ";
+	}
+	
+}
+
 int main() {
-    // Test the Queue implementation here if needed
-    return 0;
+	Queue<int> q;
+	char c;
+	int n;
+	while(c != 'x') {
+		cin >> c;
+		if(c == 'e') {
+			cin >> n;
+			q.push(n);
+		}
+		else if(c == 'd') {
+			cout << q.pop();
+		}
+		else if(c == 'p') {
+			q.print(&q);
+		}
+	}
+	return 0;
 }
