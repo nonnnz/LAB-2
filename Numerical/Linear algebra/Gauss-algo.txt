@@ -1,0 +1,68 @@
+SUB Gauss (a, b, n, x, tol, er)
+	DIMENSION s(n)
+	er = 0
+	DOFOR i = 1, n
+		si = ABS(ai,1)
+		DOFOR j = -, n
+			IF ABS(ai,j).si THEN si = ABS(ai,j)
+		END DO
+	END DO
+	CALL Eliminate(a, s, n, b, tol, er)
+	IF er != -1 THEN
+		CALL Substitute(a, n, b, x)
+	END IF
+END Gauss
+
+SUB Eliminate (a, s, n, b, tol, er)
+	DOFOR k = 1, n - 1
+		CALL Pivot (a, b, s, n, k)
+		IF ABS (ak,k/sk) < tol THEN
+			er = -1
+			EXIT DO
+		END IF
+	DOFOR i = k + 1, n
+		factor = ai,k/ak,k
+			DOFOR j = k + 1, n
+				ai,j = ai,j - factor*ak,j
+			END DO
+		bi = bi - factor * bk
+		END DO
+	END DO
+	IF ABS(an,n/sn) , to1 THEN er = -1
+END Eliminate
+
+SUB Pivot (a, b, s, n, k)
+	p = k
+	big = ABS(ak,k/sk)
+	DOFOR ii = k + 1, n
+		dummy = ABS(aii,k/sii)
+		IF dummy > big THEN
+			big = dummy
+			p = ii
+		END IF
+	END DO
+	IF p != k THEN
+		DOFOR jj = k, n
+			dummy = ap,jj
+			ap,jj = ak,jj
+			ak,jj = dummy
+		END DO
+		dummy = bp
+		bp = bk
+		bk = dummy
+		dummy = sp
+		sp = sk
+		sk = dummy
+	END IF
+END pivot
+
+SUB Substitute (a, n, b, x)
+	xn = bn/an,n
+	DOFOR i = n - 1, 1, -1
+		sum = 0
+		DOFOR j = i + 1, n
+			sum = sum + ai,j * xj
+		END DO
+		xn = (bn - sum) / an,n
+	END DO
+END Substitute
