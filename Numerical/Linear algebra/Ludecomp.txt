@@ -1,0 +1,70 @@
+SUB Ludecomp(a, b, n, tol, x, er)
+	DIM on, sn
+	er = 0
+	CALL Decompose(a, n, tol, o, s, er)
+	IF er <> -1 THEN
+		CALL Substitute(a, o, n, b, x)
+	END IF
+END Ludecomp
+
+SUB Decompose(a, n, tol, o, s, er)
+	DOFOR i = 1, n
+		oi = i
+		si = ABS(ai,1)
+		DOFOR j = 2, n
+			IF ABS(ai,j)>si THEN si = ABS(ai,j)
+		END DO
+		DOFOR k = 1, n - 1
+			CALL Pivot(a, o, s, n, k)
+			IF ABS(ao(k),k/so(k)) < tol THEN
+				er = -1
+				PRINT ao(k), k/so(k)
+				EXIT DO
+			END IF
+			DOFOR i = k + 1, n
+				factor = ao(i),k/ao(k),k
+				ao(i),k = factor
+				DOFOR j = k + 1, n
+					ao(i),j = ao(i),j - factor  ao(k),j
+				END DO
+			END DO
+		END DO
+		IF ABS(ao(k),k/so(k)) < tol THEN
+			er = -1
+			PRINT ao(k), k/so(k)
+		END IF
+END Decompose
+
+SUB Pivot (a, o, s, n, k)
+	p = k
+	big = ABS(ao(k),k/so(k))
+	DOFOR ii = k + 1, n
+		dummy = ABS(ao(ii),k/so(ii))
+		IF dummy > big THEN
+			big = dummy
+			p = ii
+		END IF
+	END DO
+	dummy = op
+	op = ok
+	ok = dummy
+END pivot
+
+SUB Substitute (a, o, b, x)
+	DOFOR i = 2, n
+		sum = bo(i)
+		DOFOR j = 1, i - 1
+			sum = sum - ao(i), j * bo(j)
+		END DO
+		bo(i) = sum
+	END DO
+	xn = bo(n)/ao(n), n
+	DOFOR i = n - 1, 1, - 1
+		sum = 0
+		DOFOR j = i + 1, n
+			sum = sum + ao(i), j * xj
+		END DO
+		xi = (bo(i) - sum)/ao(i), i
+	END DO
+END Substitute
+	
