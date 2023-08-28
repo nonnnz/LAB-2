@@ -42,8 +42,58 @@ class Rectangle {
     }
 }
 
+class LinearEquation {
+    //attribute
+    private double a, b, c, d, e, f;
+    
+    //constructor
+    LinearEquation(double a, double b, double c, double d, double e, double f) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.e = e;
+        this.f = f;
+    }
+    
+    //method
+    public boolean isSolvable() {
+        return a * d - b * c != 0;
+    }
+    public double getX() {
+        return (e * d - b * f) / (a * d - b * c);
+    }
+    public double getY() {
+        return (a * f - e * c) / (a * d - b * c);
+    } 
+    public void cal() {
+        if (isSolvable()) {
+            System.out.println("x is "+getX()+"  and y is "+getY());
+        } else System.out.println("The equation has no solution");
+    }
+}
+
 public class Lab2 {
     public static void main(String[] args) {
+        // rectangle();
+        linearEquation();
+
+    }
+    
+    static void linearEquation() {
+        Scanner sc = new Scanner(System.in);
+        double a, b, c, d, e, f;
+        a = sc.nextDouble();
+        b = sc.nextDouble();
+        c = sc.nextDouble();
+        d = sc.nextDouble();
+        e = sc.nextDouble();
+        f = sc.nextDouble();
+        LinearEquation s = new LinearEquation(a, b, c, d, e, f);
+        s.cal();
+    }
+
+    static void rectangle() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter r1's center x-, y-coordinates, width, and height: ");
