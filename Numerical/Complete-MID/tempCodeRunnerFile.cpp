@@ -2,46 +2,34 @@
 
 using namespace std;
 
-void gaussJordan(double a[3][3], double b[3]) {
+double det(double mat[3][3]) {
+    return mat[0][0] * (mat[1][1] * mat[2][2] - mat[1][2] * mat[2][1]) -
+           mat[0][1] * (mat[1][0] * mat[2][2] - mat[1][2] * mat[2][0]) +
+           mat[0][2] * (mat[1][0] * mat[2][1] - mat[1][1] * mat[2][0]);
+}
+
+void cramerrule(double a[3][3], double b[3]) {
     int n = 3;
-
+    double A[3][3];
     for (int i = 0; i < n; i++) {
-        double pivot = a[i][i];
-        for (int j = i; j < n; j++) {
-            a[i][j] /= pivot;
-        }
-        b[i] /= pivot;
-        cout<<"normalize r"<<i+1<<"/"<<pivot<<endl;
-        for (int r = 0; r < n; r++) {
-            for (int c = 0; c < n; c++) {
-                cout << a[r][c] << "\t";
-            }
-            cout<<"| "<<b[r]<<endl;
-        }
-        cout<<endl;
-
-        // eliminate
         for (int j = 0; j < n; j++) {
-            if (j != i) {
-                double factor = a[j][i];
-                for (int k = i; k < n; k++) {
-                    a[j][k] -= factor * a[i][k];
-                }
-                b[j] -= factor * b[i];
-            }
+            A[i][j] = a[i][j];
         }
-        cout<<"reduction x"<<i+1<<endl;
-        for (int r = 0; r < n; r++) {
-            for (int c = 0; c < n; c++) {
-                cout << a[r][c] << "\t";
-            }
-            cout<<"| "<<b[r]<<endl;
-        }
-        cout<<endl;
     }
 
+    double detA = det(A);
+    if (detA == 0) return;
+
+    double x[n];
     for (int i = 0; i < n; i++) {
-        cout << "x" << i + 1 << " = " << b[i] << endl;
+        for (int j = 0; j < n; j++) {
+            A[j][i] = b[j];
+        }
+        x[i] = det(A) / detA;
+        cout << "x" << i + 1 << " = " << det(A) << "/" << detA << " = " << x[i] << endl;
+        for (int j = 0; j < n; j++) {
+            A[j][i] = a[j][i];
+        }
     }
 }
 
@@ -54,7 +42,7 @@ int main() {
 
     double b[3] = {9, 0, -4};
 
-    gaussJordan(a, b);
+    cramerrule(a, b);
 
     return 0;
 }
