@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 class Stack {
 	public:
 		int top=-1;
@@ -10,6 +11,9 @@ class Stack {
 		void push(char x);
 		char pop();
 		void check();
+		bool empty() {
+			return (top==-1);
+		}
 };
 
 void Stack::push(char x) {
@@ -26,6 +30,7 @@ int main() {
 	int n, i=0, j;
 	char str[9999];
 	cin >> str;
+	cout<<s.empty();
 	while(str[i] != '\0') {
 		s.push(str[i]);
 		i++;
@@ -51,5 +56,6 @@ int main() {
     } else {
         cout << "Error";
     }
+	cout<<s.empty();
 	return 0;
 }
