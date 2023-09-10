@@ -164,8 +164,128 @@ public class Lab4 {
             
     }
     public static void main(String[] args) {
-//        MatrixMultiplication();
-//        MinMax();
-        AscendSortFreq();
+       
+        // MinMax();
+        // AscendSortFreq();
+        // MatrixMultiplication();
+        // FindNearestPoints();
+        minTwoSet();
+        // findPokemon();
+        // consecutiveFour();
+    }
+
+    public static void FindNearestPoints(){
+        Scanner input = new Scanner(System.in);
+        int numberOfPoints = input.nextInt();
+    
+        // Create an array to store points
+        double[][] points = new double[numberOfPoints][2];
+        for (int i = 0; i < points.length; i++) {
+          points[i][0] = input.nextDouble();
+          points[i][1] = input.nextDouble();
+        }
+    
+        // p1 and p2 are the indices in the points array
+        int p1 = 0, p2 = 1; // Initial two points
+        double shortestDistance = distance(points[p1][0], points[p1][1], 
+          points[p2][0], points[p2][1]); // Initialize shortestDistance
+        
+        // Compute distance for every two points
+        for (int i = 0; i < points.length; i++) {
+          for (int j = i + 1; j < points.length; j++) {
+            double distance = distance(points[i][0], points[i][1],
+              points[j][0], points[j][1]); // Find distance
+    
+            if (shortestDistance > distance) {
+              p1 = i; // Update p1
+              p2 = j; // Update p2
+              shortestDistance = distance; // Update shortestDistance 
+            }
+          }
+        }
+    
+        // Display result
+        System.out.format("%.2f", distance(points[p1][0], points[p1][1], points[p2][0], points[p2][1]));
+    }
+
+    public static double distance(
+        double x1, double y1, double x2, double y2) {
+      return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    }
+
+    public static void minTwoSet(){}
+
+    public static void findPokemon(){}
+
+    public static void consecutiveFour() {
+        Scanner sc = new Scanner(System.in);
+        
+        int rows = sc.nextInt();
+        int cols = sc.nextInt();
+        
+        int[][] values = new int[rows][cols];
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                values[i][j] = sc.nextInt();
+            }
+        }
+        
+        if(isConsecutiveFour(values)) System.out.print(1);
+        else System.out.print(0);
+        
+        sc.close();
+    }
+    
+    public static boolean isConsecutiveFour(int[][] values) {
+        int rows = values.length;
+        int cols = values[0].length;
+        
+        // Check horizontally
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols - 3; j++) {
+
+                if (values[i][j] == values[i][j + 1] && 
+                    values[i][j] == values[i][j + 2] && 
+                    values[i][j] == values[i][j + 3]) {
+                    return true;
+                }
+            }
+        }
+        
+        // Check vertically
+        for (int i = 0; i < rows - 3; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (values[i][j] == values[i + 1][j] && 
+                    values[i][j] == values[i + 2][j] && 
+                    values[i][j] == values[i + 3][j]) {
+                    return true;
+                }
+            }
+        }
+        
+        // Check diagonally (top-left to bottom-right)
+        for (int i = 0; i < rows - 3; i++) {
+            for (int j = 0; j < cols - 3; j++) {
+                if (values[i][j] == values[i + 1][j + 1] && 
+                    values[i][j] == values[i + 2][j + 2] && 
+                    values[i][j] == values[i + 3][j + 3]) {
+                    return true;
+                }
+            }
+        }
+        
+        // Check diagonally (bottom-left to top-right)
+        for (int i = 3; i < rows; i++) {
+            for (int j = 0; j < cols - 3; j++) {
+                if (values[i][j] == values[i - 1][j + 1] && 
+                    values[i][j] == values[i - 2][j + 2] && 
+                    values[i][j] == values[i - 3][j + 3]) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
 }

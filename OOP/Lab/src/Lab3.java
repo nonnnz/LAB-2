@@ -2,9 +2,15 @@ import java.util.Scanner;
 
 public class Lab3 {
     public static void main(String[] args) {
-        // RoachPopulation();
-        // Palindrome();
-        // MyTriangle();
+        Scanner sc = new Scanner(System.in);
+        RoachPopulation();
+        Palindrome();
+        MyTriangle();
+        /* Estimate */
+        double i = sc.nextDouble();
+        System.out.format("%.4f",Estimate(i));
+        checkTriangle();
+        light();
     }
 
     public static void RoachPopulation() {
@@ -41,6 +47,94 @@ public class Lab3 {
         }
         else System.out.println(0);
             
+    }
+
+    public static double Estimate(double i) {
+        double sum = 0;
+        for(int j = 1; j <= i; j++) {
+            sum +=  (Math.pow(-1, j+1) / (2*j-1));
+        }
+        return 4 * sum;
+    }
+
+    /* CheckTriangle */
+    public static void checkTriangle() {
+        Scanner sc = new Scanner(System.in);
+        double x0 = sc.nextDouble();
+        double y0 = sc.nextDouble();
+        double x1 = sc.nextDouble();
+        double y1 = sc.nextDouble();
+        double x2 = sc.nextDouble();
+        double y2 = sc.nextDouble();
+
+        boolean left = leftOfTheLine(x0, y0, x1, y1, x2, y2);
+        boolean onTheSameLine = onTheSameLine(x0, y0, x1, y1, x2, y2);
+
+        if (onTheSameLine) {
+            System.out.println("0");
+        } else if (left) {
+            System.out.println("2");
+        } else {
+            System.out.println("1");
+        }
+
+    }
+    
+    /** Return true if point (x2, y2) is on the left side of the
+    * directed line from (x0, y0) to (x1, y1) */
+    public static boolean leftOfTheLine(double x0, double y0,
+    double x1, double y1, double x2, double y2) {
+        double result = (x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0);
+        return result > 0;
+    }
+    /** Return true if point (x2, y2) is on the same
+    * line from (x0, y0) to (x1, y1) */
+    public static boolean onTheSameLine(double x0, double y0,
+    double x1, double y1, double x2, double y2) {
+        double result = (x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0);
+        return result == 0;
+    }
+    /** Return true if point (x2, y2) is on the
+    * line segment from (x0, y0) to (x1, y1) */
+    public static boolean onTheLineSegment(double x0, double y0,
+    double x1, double y1, double x2, double y2) {
+        boolean onTheSameLine = onTheSameLine(x0, y0, x1, y1, x2, y2);
+
+        if (!onTheSameLine) {
+            return false;
+        }
+
+        double minX = Math.min(x0, x1);
+        double maxX = Math.max(x0, x1);
+        double minY = Math.min(y0, y1);
+        double maxY = Math.max(y0, y1);
+
+        return x2 >= minX && x2 <= maxX && y2 >= minY && y2 <= maxY;
+    }
+
+    /* Light */
+    public static void light() {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int count = 0;
+
+        int[][] spacecraft = new int[n][2];
+        for(int i = 0; i < n; i++) {
+            spacecraft[i][0] = sc.nextInt();
+            spacecraft[i][1] = sc.nextInt();
+        }
+
+        int[] light = new int[m];
+        for(int i = 0; i < m; i++) {
+            light[i] = sc.nextInt();
+            for(int j = 0; j < n; j++) {
+                if(light[i] > spacecraft[j][0] && light[i] < spacecraft[j][1]) count++;
+            }
+        }
+
+        System.out.print(count);
+
     }
 }
 
