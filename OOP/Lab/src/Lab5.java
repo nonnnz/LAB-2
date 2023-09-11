@@ -75,9 +75,9 @@ public class Lab5 {
         // one();
         // star();
         // emp();
-        sortMergeList();
-        KIB();
-        consecutiveFour();
+        // sortMergeList();
+        // KIB();
+        // consecutiveFour();
     }
             
     public static void star() {

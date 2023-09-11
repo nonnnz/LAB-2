@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 class AscendSortFreq {
     double[] A;
@@ -86,6 +87,42 @@ class MatrixMultiplication {
     }
 }
 
+class MinTwoSet {
+    private int[] A;
+
+    MinTwoSet(int n) {
+        this.A = new int[n];
+        inputArray();
+        Arrays.sort(A);
+    }
+
+    private void inputArray() {
+        Scanner sc = new Scanner(System.in);
+        for (int i = 0; i < A.length; i++) {
+            A[i] = sc.nextInt();
+        }
+    }
+
+    public int minToSet() {
+        int min = Integer.MAX_VALUE, wi, wj, sum;
+        for (int i = 0; i < A.length; i++) {
+            wi = A[A.length - 1];
+            for (int j = 0; j < i; j++) {
+                wi += A[j];
+            }
+            wj = 0;
+            for (int j = i; j < A.length - 1; j++) {
+                wj += A[j];
+            }
+            sum = Math.abs(wi - wj);
+            if (sum < min) {
+                min = sum;
+            }
+        }
+        return min;
+    }
+}
+
 public class Lab4 {
     public static void MatrixMultiplication() {
         Scanner sc = new Scanner(System.in);
@@ -168,10 +205,12 @@ public class Lab4 {
         // MinMax();
         // AscendSortFreq();
         // MatrixMultiplication();
-        // FindNearestPoints();
+        FindNearestPoints();
         minTwoSet();
-        // findPokemon();
-        // consecutiveFour();
+        findPokemon();
+        consecutiveFour();
+        car();
+        oilDeposits();
     }
 
     public static void FindNearestPoints(){
@@ -213,9 +252,50 @@ public class Lab4 {
       return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
     }
 
-    public static void minTwoSet(){}
+    public static void minTwoSet(){
+        Scanner sc = new Scanner(System.in);
+        MinTwoSet w = new MinTwoSet(sc.nextInt());
+        System.out.println(w.minToSet());
+    }
 
-    public static void findPokemon(){}
+    public static void findPokemon(){
+        Scanner input = new Scanner(System.in);
+		int h = input.nextInt();
+		int w = input.nextInt();
+		int a[][] = new int[h][w];
+		for(int i = 0; i < h; i++) {
+			for(int j = 0; j < w; j++) {
+				int ele = input.nextInt();
+				a[i][j] = ele;
+			}
+		}
+		int max = -9999;
+		int s_i = 0, s_j = 0;
+		for(int i = 0; i < h; i++) {
+			// w > 1
+			for(int j = 0; j < w-1; j++) {
+				// horizontal
+				if(Math.abs(a[i][j] - a[i][j+1]) < 10) {
+					if(a[i][j] + a[i][j+1] > max) {
+						max = a[i][j] + a[i][j+1];
+						s_i = i+1;
+						s_j = j+1;
+					}
+				}
+				// vertical
+				if(i > 0) {
+					if(Math.abs(a[i][j] - a[i-1][j]) < 10) {
+						if(a[i][j] + a[i-1][j] > max) {
+							max = a[i][j] + a[i-1][j];
+							s_i = i+1-1;
+							s_j = j+1;
+						}
+					}
+				}
+			}
+		}
+		System.out.print(s_i+" "+s_j);
+	}
 
     public static void consecutiveFour() {
         Scanner sc = new Scanner(System.in);
@@ -287,5 +367,154 @@ public class Lab4 {
         }
         
         return false;
+    }
+
+    public static void car() {
+        Scanner scanner = new Scanner(System.in);
+
+        int m = scanner.nextInt(); 
+        int n = scanner.nextInt(); 
+        int t = scanner.nextInt(); 
+
+        int[][] road = new int[n][m];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                road[i][j] = scanner.nextInt();
+            }
+        }
+
+        // show time
+        // int[] actions = new int[t];
+        // int currentLane = n - 1; // start lane
+
+        // for (int i = 0; i < t; i++) {
+        //     // Check if there is an obstacle
+        //     if (road[currentLane][i] == 1) {
+        //         if (currentLane < n && road[currentLane - 1][i] == 0) {
+        //               actions[i] = 1; 
+        //             currentLane--;
+        //         } else if (currentLane < -1 && road[currentLane + 1][i] == 0) {
+        //             actions[i] = 2; 
+        //             currentLane++;
+        //         } else {
+        //             actions[i] = 3; 
+        //         }
+        //     } else {
+        //         actions[i] = 3; 
+        //     }
+        //     road[currentLane][i] = 8;
+        // }
+
+        // for (int i = 0; i < t; i++) {
+        //     System.out.println(actions[i]);
+        // }
+
+        int start = n - 1;
+        int s = start;
+        int status = 0;
+        for (int f = 0; f < road[0].length; f++) {
+            if (road[road.length - 1][f] == 0) {
+                for (int i = 0; i < road.length; i++) {
+                    status = 0;
+                    if (f < start) {
+                        if (start - 1 >= 0 && road[i][start - 1] == 0) {
+                            System.out.println("1");
+                            start = start - 1;
+                        } else if (road[i][start] == 0) {
+                            System.out.println("3");
+                        } else if (start + 1 <= road[0].length - 1 && road[i][start + 1] == 0) {
+                            System.out.println("2");
+                            start = start + 1;
+                        } else {
+                            System.out.println("-1");
+                            break;
+                        }
+                    } else if (f > start) {
+                        if (start + 1 <= road[0].length - 1 && road[i][start + 1] == 0) {
+                            System.out.println("2");
+                            start = start + 1;
+                        } else if (road[i][start] == 0) {
+                            System.out.println("3");
+                        } else if (start - 1 >= 0 && road[i][start - 1] == 0) {
+                            System.out.println("1");
+                            start = start - 1;
+                        } else {
+                            System.out.println("-1");
+                            break;
+                        }
+                    } else if (f == start) {
+                        if (road[i][start] == 0) {
+                            System.out.println("3");
+                        } else if (start - 1 >= 0 && road[i][start - 1] == 0) {
+                            System.out.println("1");
+                            start = start - 1;
+                        } else if (start + 1 <= road[0].length - 1 && road[i][start + 1] == 0) {
+                            System.out.println("2");
+                            start = start + 1;
+                        } else {
+                            System.out.println("-1");
+                            break;
+                        }
+                    }
+                    status = 1;
+                }
+                start = s;
+                if (status == 1) {
+                    break;
+                }
+            }
+        }
+        scanner.close();
+    }
+
+    public static void oilDeposits() {
+        Scanner scanner = new Scanner(System.in);
+
+        int m = scanner.nextInt(); // Number of rows
+        int n = scanner.nextInt(); // Number of columns
+
+
+        char[][] grid = new char[m][n];
+
+        for (int i = 0; i < m; i++) {
+            String row = scanner.next();
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = row.charAt(j);
+            }
+        }
+
+        int oilWells = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '@') {
+                    oilWells++;
+                    markVisited(grid, i, j);
+                }
+            }
+        }
+
+        System.out.println(oilWells);
+    }
+
+    public static void markVisited(char[][] grid, int row, int col) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        if (row < 0 || row >= m || col < 0 || col >= n || grid[row][col] != '@') {
+            return;
+        }
+
+        grid[row][col] = '*';
+
+        markVisited(grid, row - 1, col); // Up
+        markVisited(grid, row + 1, col); // Down
+        markVisited(grid, row, col - 1); // Left
+        markVisited(grid, row, col + 1); // Right
+        markVisited(grid, row - 1, col - 1); // Diagonal Up-Left
+        markVisited(grid, row - 1, col + 1); // Diagonal Up-Right
+        markVisited(grid, row + 1, col - 1); // Diagonal Down-Left
+        markVisited(grid, row + 1, col + 1); // Diagonal Down-Right
     }
 }
