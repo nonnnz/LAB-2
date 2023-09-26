@@ -20,9 +20,9 @@ double lagange(double* x, double* y, int n, double find) {
 }
 
 int main() {
-    int n = 5; 
-    double x[n] = {0, 20000, 40000, 60000, 80000};  
-    double y[n] = {9.81, 9.7487, 9.6879, 9.6879, 9.5682};  
+    int n = 3; 
+    double x[n] = {0, 40000, 80000};  
+    double y[n] = {9.81, 9.6879, 9.5682};  
 
     double find = 42235;  
 

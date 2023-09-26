@@ -2,20 +2,17 @@
 
 using namespace std;
 
-double term(double* x, double find, int i, int j) {
-    if (j == -1) 
-        return 1;
-    else if (i == j)
-        return term(x, find, i, j - 1);
-    else 
-        return ((x[j] - find) / (x[j] - x[i])) * term(x, find, i, j - 1);
-}
-
 double lagange(double* x, double* y, int n, double find) {
-    double result = 0;
+    double result = 0.0;
     for (int i = 0; i < n; i++) {
-        result += term(x, find, i, n-1) * y[i];
+        double term = 1;
+        for (int j = 0; j < n; j++) {
+            if(i!=j)
+            term *= (x[j] - find) / (x[j]-x[i]);
+        }
+        result += term * y[i];
     }
+
     return result;
 }
 
