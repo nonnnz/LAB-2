@@ -2,54 +2,39 @@
 
 using namespace std;
 
-double splineCubic(vector<double> x, vector<double> y, double find) {
-    int n_Unknown = 4 * (x.size()-1);
+double splineQuad(vector<double> x, vector<double> y, double find) {
+    int n_Unknown = 3 * (x.size()-1);
     // initialize matrix
     double m[n_Unknown][n_Unknown+1];
     for(int i = 0; i < n_Unknown; i++) 
         for(int j = 0; j < n_Unknown+1; j++) m[i][j] = 0;
     // through points equations
     for(int i = 0, j = 1; j < x.size()-1; i += 2, j++) {
-        m[i][(j-1)*4] = pow(x[j], 3); // a
-        m[i][(j-1)*4+1] = pow(x[j], 2); // b
-        m[i][(j-1)*4+2] = x[j]; // c
-        m[i][(j-1)*4+3] = 1; // d
+        m[i][(j-1)*3] = pow(x[j], 2); // a
+        m[i][(j-1)*3+1] = x[j]; // b
+        m[i][(j-1)*3+2] = 1; // c
         m[i][n_Unknown] = y[j]; // B
-        m[i+1][j*4] = pow(x[j], 3);
-        m[i+1][j*4+1] = pow(x[j], 2); 
-        m[i+1][j*4+2] = x[j];
-        m[i+1][j*4+3] = 1;
+        m[i+1][j*3] = pow(x[j], 2); 
+        m[i+1][j*3+1] = x[j];
+        m[i+1][j*3+2] = 1;
         m[i+1][n_Unknown] = y[j];
     }
     // begin, end
     for(int i = 2*(x.size()-2), j = 0; j < 2; i++, j++) {
-        m[i][j*4*(x.size()-2)] = pow(x[j*(x.size()-1)], 3);
-        m[i][j*4*(x.size()-2)+1] = pow(x[j*(x.size()-1)], 2); 
-        m[i][j*4*(x.size()-2)+2] = x[j*(x.size()-1)];
-        m[i][j*4*(x.size()-2)+3] = 1;
-        m[i][n_Unknown] = y[j*(x.size()-1)];
+        m[i][j*3*(x.size()-2)] = pow(x[j*(x.size()-1)], 2); // a
+        m[i][j*3*(x.size()-2)+1] = x[j*(x.size()-1)]; // b
+        m[i][j*3*(x.size()-2)+2] = 1; // c
+        m[i][n_Unknown] = y[j*(x.size()-1)]; // B
     }
-    // first derivative
-	for (int i = (x.size()-1)*2, j = 0; i < n_Unknown-x.size(); i++, j++) {
-		m[i][(j*4)] = 3*pow(x[j+1],2);
-        m[i][(j*4)+1] = 2*x[j+1];
-		m[i][(j*4)+2] = 1;
-		m[i][(j*4)+4] = -3*pow(x[j+1],2);
-        m[i][(j*4)+5] = -2*x[j+1];
-		m[i][(j*4)+6] = -1;
+    // derivative equations
+	for (int i = (x.size()-1)*2, j = 0; i < n_Unknown-1; i++, j++) {
+		m[i][(j*3)] = 2*x[j+1];
+		m[i][(j*3)+1] = 1;
+		m[i][(j*3)+3] = -2*x[j+1];
+		m[i][(j*3)+4] = -1;
 	}
-    // second derivative
-	for (int i = (x.size())*2+1, j = 0; i < n_Unknown-2; i++, j++) {
-		m[i][(j*4)] = 6*x[j+1];
-        m[i][(j*4)+1] = 2;
-		m[i][(j*4)+4] = -6*x[j+1];
-        m[i][(j*4)+5] = -2;
-	}    
-    // boundary conditions
-    m[n_Unknown-2][0] = 6*x[0];
-    m[n_Unknown-2][1] = 2;
-    m[n_Unknown-1][n_Unknown-4] = 6*x[x.size()-1];
-    m[n_Unknown-1][n_Unknown-4+1] = 2;
+    // a1 = 0
+    m[n_Unknown-1][0] = 1;
 
     // print
     for (int r = 0; r < n_Unknown; r++) {
@@ -113,7 +98,7 @@ double splineCubic(vector<double> x, vector<double> y, double find) {
 
     for (int i = 0; i < x.size() - 1; i++) {
         if (find >= x[i] && find <= x[i + 1]) {
-            return eq[i*4]*pow(find,3)+eq[i*4+1]*pow(find,2)+eq[i*4+2]*find+eq[i*4+3];
+            return eq[i*3]*pow(find,2)+eq[i*3+1]*find+eq[i*3+2];
         }
     }
 
@@ -125,7 +110,7 @@ int main() {
     vector<double> y = {9.5, 8, 10.5, 39.5, 72.5};
     double find = 4.5;
 
-    cout << splineCubic(x, y, find) << endl;
+    cout << splineQuad(x, y, find) << endl;
     
     return 0;
 }
