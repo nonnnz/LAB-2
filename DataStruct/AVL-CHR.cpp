@@ -9,18 +9,21 @@ class node {
 	int value = 0;
 	int height;
 	node(int h = 0) {
+		// cout<<"n1";
 		value = 0;
 		left = NULL;
 		right = NULL;
 		height = h;
 	}
 	node(int v, int h = 0) {
+		// cout<<"n2";
 		value = v;
 		left = NULL;
 		right = NULL;
 		height = h;
 	}
 	node(int v, node *lt, node *rt, int h = 0) {
+		// cout<<"n3";
 		value = v;
 		left = lt;
 		right = rt;
@@ -30,7 +33,7 @@ class node {
 
 class tree {
 	public:
-	node *r;
+	node *r = nullptr;
 
 	int max( int lhs, int rhs ) const {
 	    return lhs > rhs ? lhs : rhs;
@@ -49,12 +52,11 @@ class tree {
 	}
 	
 	void insert( int x, node *&t) {
-		node* k;
-		cout<<(k->value == -1)<<endl;
-		cout<<(t == NULL);
-		if( t == NULL ) {
-			cout<<"first";
-			t = new node{ x, NULL, NULL };
+		// cout << "t: " << t << endl;  // Add this line before the comparison.
+		// cout << (t == nullptr) << endl;
+		if( t == nullptr ) {
+			// cout<<"first";
+			t = new node{ x, nullptr, nullptr };
 		}
 		else if( x < t->value )
 			insert( x, t->left );
