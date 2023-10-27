@@ -32,9 +32,6 @@ def divided_differnces(x, h, order, mt, oh):
 x = 2
 h = 0.25
 
-print(f'{round(divided_differnces(x,h,1,"fwd",1)[0],6)} 
-      et= {round(divided_differnces(x,h,1,"fwd",1)[1],6)}%')
-print(f'{round(divided_differnces(x,h,1,"bwd",1)[0],6)} 
-      et= {round(divided_differnces(x,h,1,"bwd",1)[1],6)}%')
-print(f'{round(divided_differnces(x,h,1,"central",2)[0],6)} 
-      et= {round(divided_differnces(x,h,1,"central",2)[1],6)}%')
+print(f'{round(divided_differnces(x,h,1,"fwd",1)[0],6)} et= {round(divided_differnces(x,h,1,"fwd",1)[1],6)}%')
+print(f'{round(divided_differnces(x,h,1,"bwd",1)[0],6)} et= {round(divided_differnces(x,h,1,"bwd",1)[1],6)}%')
+print(f'{round(divided_differnces(x,h,1,"central",2)[0],6)} et= {round(divided_differnces(x,h,1,"central",2)[1],6)}%')

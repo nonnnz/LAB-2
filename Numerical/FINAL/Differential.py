@@ -2,16 +2,17 @@ import sympy as sp
 import math
 
 def f(x):
-    return math.exp(x);
+    return math.exp(x/3)+math.pow(x,2);
 
 def divided_differnces(x, h, order, mt, oh):
     # true value
     x_sp = sp.symbols('x')
-    func = sp.exp(x_sp)
+    func = sp.exp(x_sp/3)+sp.Pow(x_sp,2)
 
     true_derivative = sp.diff(func,x_sp,order)
     expr_with_substitution = true_derivative.subs(x_sp, x)
     true_value = sp.N(expr_with_substitution)
+
     if order == 1:
         if mt == "fwd" and oh == 1:
             df = (f(x+(h*1))-f(x+(h*0)))/h
@@ -29,12 +30,9 @@ def divided_differnces(x, h, order, mt, oh):
     error = (abs(df-true_value)/true_value) * 100
     return df, error
 
-x = 2
-h = 0.25
+x = -2.5  
+h = 0.1
 
-print(f'{round(divided_differnces(x,h,1,"fwd",1)[0],6)} 
-      et= {round(divided_differnces(x,h,1,"fwd",1)[1],6)}%')
-print(f'{round(divided_differnces(x,h,1,"bwd",1)[0],6)} 
-      et= {round(divided_differnces(x,h,1,"bwd",1)[1],6)}%')
-print(f'{round(divided_differnces(x,h,1,"central",2)[0],6)} 
-      et= {round(divided_differnces(x,h,1,"central",2)[1],6)}%')
+print(f'{round(divided_differnces(x,h,2,"fwd",2)[0],6)} et= {round(divided_differnces(x,h,2,"fwd",2)[1],6)}%')
+print(f'{round(divided_differnces(x,h,2,"bwd",2)[0],6)} et= {round(divided_differnces(x,h,2,"fwd",2)[1],6)}%')
+print(f'{round(divided_differnces(x,h,2,"central",4)[0],6)} et= {round(divided_differnces(x,h,2,"fwd",2)[1],6)}%')
