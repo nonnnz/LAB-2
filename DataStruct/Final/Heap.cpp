@@ -51,21 +51,14 @@ class Heap {
 		}
 
         // BEGIN: heap-sort
-        void heapSort(int arr[], int n) {
-            Heap heap;
-            for (int i = 1; i < n+1; i++) {
-                heap.add(arr[i]);
+        void heapSort() {
+            int n = q[0];
+            for (int i = n; i >= 1; i--) {
+                q[i] = del();
             }
-            heap.print();
-            heap.heapify();
-            heap.print();
-            for (int i = 1; i <= n; i++) {
-                arr[i] = heap.del();
-            }
+            q[0] = n;
         }
         // END: heap-sort
-
-        
 		
 		void insert(int n) {
 			if(q[0] < 999) {
@@ -98,6 +91,7 @@ class Heap {
 						q[l] = q[p];
 						q[p] = t;
 						p = l;
+                        cout<<r<<":"<<q[r]<<endl;
 					} else if(r <= q[0] && q[r] > q[p] && q[r] > q[l]) {
 						int t = q[r];
 						q[r] = q[p];
@@ -124,6 +118,69 @@ class Heap {
 		}
 };
 
+// BEGIN: min-heap
+class MinHeap {
+    public:
+        int q[1000];
+        
+        MinHeap() {
+            q[0] = 0;
+        }
+
+        void add(int n) {
+            q[0] += 1;
+            q[q[0]] = n;
+            int i = q[0];
+            while (i > 1 && q[i/2] > q[i]) {
+                int t = q[i/2];
+                q[i/2] = q[i];
+                q[i] = t;
+                i = i/2;
+            }
+        }
+
+        int del() {
+            if (q[0] > 0) {
+                int s = q[1];
+                q[1] = q[q[0]];
+                q[0] = q[0] - 1;
+                int p = 1;
+                while (p <= q[0]) {
+                    int l = p*2;
+                    int r = (p*2) + 1;
+                    if (l <= q[0] && q[l] < q[p] && q[l] <= q[r]) {
+                        int t = q[l];
+                        q[l] = q[p];
+                        q[p] = t;
+                        p = l;
+                    } else if (r <= q[0] && q[r] < q[p] && q[r] < q[l]) {
+                        int t = q[r];
+                        q[r] = q[p];
+                        q[p] = t;
+                        p = r;
+                    } else {
+                        break;
+                    }
+                }
+                return s;
+            } else {
+                return -1;
+            }
+        }
+
+        void print() {
+            for (int i = 1; i <= q[0]; i++) {
+                if (i == q[0]) {
+                    cout << q[i];
+                } else {
+                    cout << q[i] << " ";
+                }
+            }
+            cout << endl;
+        }
+};
+// END: min-heap
+
 int main() {
 	Heap h;
 	char c;
@@ -142,6 +199,6 @@ int main() {
 		else if(c=='p') h.print();
 		else if(c=='d') cout<<h.del()<<endl;
         else if(c=='h') h.heapify();
-        else if(c=='s') h.heapSort(h.q, h.q[0]);
+        else if(c=='s') h.heapSort();
 	}
 }
