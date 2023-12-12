@@ -11,7 +11,7 @@ void onept(double x0, double es) {
     double x = x0, ea = 100, xold;
     int iter = 0;
     while(ea > es) {
-        if(iter > 10) break;
+        if(iter > 1000) break;
         xold = x;
         x = f2(xold);
         iter++;

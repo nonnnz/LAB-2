@@ -27,7 +27,7 @@ void graphical() {
         xl = xr;
     }
     // now xl = 4, xr = 5 (-8, 35)
-    xl = 4.186;
+    // xl = 4.186;
     while(r != 0) {
         xr = xl + 0.000001;
         r = func(xr);
