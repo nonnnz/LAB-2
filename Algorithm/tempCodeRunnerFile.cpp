@@ -1,17 +1,11 @@
-if(l > r) return INT_MIN;
-    int mid = l + (r - l) / 2;
-    int max_left = maxSubArraySum(a, l, mid-1);
-    int max_right = maxSubArraySum(a, mid+1, r);
+    int m = (l + r) / 2;
 
-    int max_left_sum = 0, max_right_sum = 0;
-    for(int i = mid-1, sum = 0; i >= l; i--) {
-        sum += a[i];
-        max_left_sum = max(max_left_sum, sum);
-    }
-    for(int i = mid+1, sum = 0; i <= r; i++) {
-        sum += a[i];
-        max_right_sum = max(max_right_sum, sum);
-    }
+    int p_index;
+    if (arr[l] < arr[m] && arr[m] < arr[r])
+        p_index = m;
+    else if (arr[l] < arr[r] && arr[r] < arr[m])
+        p_index = r;
+    else
+        p_index = l;
 
-    int max_mid_sum = max_left_sum + max_right_sum + a[mid];
-    return max(max(max_left, max_right), max_mid_sum);
+    swap(arr[l], arr[p_index]);
