@@ -21,11 +21,19 @@ int partition(int a[], int l, int r) {
     return j;
 }
 
-int quick_select(int a[], int low, int high, int k) {
+void printA(int a[], int n=7) {
+	for(int i=0;i<n;i++) cout<<a[i]<<" ";
+}
+
+
+int quick_select(int a[], int low, int high, int k, int count[]) {
     if (low == high) return a[low];
     
     if (low <= high) {
         int p_index = partition(a, low, high);
+        printA(a);
+        cout<<endl<<a[p_index]<<endl;
+        count[0]++;
         int L_size = p_index - low + 1;
 
         if (k == L_size) {
@@ -33,10 +41,10 @@ int quick_select(int a[], int low, int high, int k) {
         }
 
         else if (k < L_size)
-            return quick_select(a, low, p_index - 1, k);
+            return quick_select(a, low, p_index - 1, k, count);
 
         else {
-            return quick_select(a, p_index + 1, high, k - L_size);
+            return quick_select(a, p_index + 1, high, k - L_size, count);
         }
     }
     else return -1;
@@ -69,18 +77,20 @@ void quickSort(int a[], int l, int r) {
 }
 
 int main() {
-	// int n, k;
+	int n, k;
 	// cin>>n>>k;
 	// int a[n];
-    // n = 7, k = 3;
-    // int a[] = {1,5,10,4,8,2,6};
+    n = 7, k = 3;
+    int a[] = {1,5,10,4,8,2,6};
 	// for(int i=0; i<n; i++) cin>>a[i];
-    int a[] = {1, 5, 10, 4, 8, 2, 6, 9, 20};
-    int k = 1;
-    int n = sizeof(a) / sizeof(a[0]);
+    // int a[] = {1, 5, 10, 4, 8, 2, 6, 9, 20};
+    // int k = 1;
+    // int n = sizeof(a) / sizeof(a[0]);
 	
     // cout<<kthSmallest(a, 0, n-1, k);
-    cout<<quick_select(a, 0, n-1, k);
+    int count[1];
+    count[0] = 1;
+    cout<<quick_select(a, 0, n-1, k, count)<<" "<<count[0];
 	// cout<<quick_select(a, 0, n, k);
     // quickSort(a, 0, n-1);
     // for (int i = 0; i < n; i++) cout << a[i] << " ";
