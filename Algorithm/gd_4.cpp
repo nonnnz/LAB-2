@@ -21,6 +21,10 @@ void slove(int a[][2], int n) {
             sum2 += a[j][1];
         }
         sum = abs(sum2 - sum1);
+        if(sum == 0) {
+            cout<<0;
+            return;
+        }
         if(sum < min) {
             min = sum;
         }
