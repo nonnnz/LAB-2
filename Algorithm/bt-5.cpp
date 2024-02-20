@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void sol(int n, int k, int index, int count, int ans[]) {
+void backtrack(int n, int k, int index, int count, int ans[]) {
     if (index == n) {
         if (count == k) {
             for (int i = 0; i < n; i++) {
@@ -17,11 +17,15 @@ void sol(int n, int k, int index, int count, int ans[]) {
         return;
     }
 
+    if (count > k) {
+        return;
+    }
+
     ans[index] = 0;
-    sol(n, k, index + 1, count + 1, ans);
+    backtrack(n, k, index + 1, count + 1, ans);
 
     ans[index] = 1;
-    sol(n, k, index + 1, count, ans);
+    backtrack(n, k, index + 1, count, ans);
 }
 
 int main() {
@@ -29,7 +33,7 @@ int main() {
     cin >> n >> k;
 
     int ans[n];
-    sol(n, k, 0, 0, ans);
+    backtrack(n, k, 0, 0, ans);
 
     return 0;
 }
