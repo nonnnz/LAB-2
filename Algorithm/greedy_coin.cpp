@@ -18,10 +18,11 @@ int coin_changing(int W, int D[], int n) {
 }
 
 int main() {
-	int d[] = {1, 5, 2, 10};
+	int d[] = {1, 3, 4, 5};
 	int n = sizeof(d) / sizeof(d[0]);
 	
-	cout<<coin_changing(57, d, n);
+	cout<<coin_changing(7, d, n);
+	// 7 not works for 1, 3, 4, 5
 	
 	return 0;
 }
