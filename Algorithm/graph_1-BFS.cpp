@@ -12,7 +12,6 @@ void BFS(vector<vector<int> >g, int start, int dest, vector<bool> visited) {
 		int cur = q.front();
 		q.pop();
 //		cout << cur << " ";
-		`
 		for(int i=0; i<g.size(); i++) {
 			if(g[cur][i] && !visited[i]) {
 				q.push(i);

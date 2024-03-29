@@ -21,6 +21,6 @@ int C(int n, int k) {
 }
 
 int main() {
-    cout << C(6, 4) << endl;
+    cout << C(7, 5) << endl;
     return 0;
 }
