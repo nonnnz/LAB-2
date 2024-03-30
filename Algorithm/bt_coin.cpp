@@ -51,11 +51,12 @@ int coinChange(vector<int>& coins, int amount) {
 }
 
 int main() {
-    int d[] = {1, 3, 4, 5};
-    vector<int> coins{1, 3, 4, 5};
+    // int d[] = {1, 3, 4, 5};
+    int d[] = {1, 4, 5, 10};
+    vector<int> coins{1, 4, 5, 10};
     int n = sizeof(d) / sizeof(d[0]);
     
-    cout<<coin_changingBFS(7, coins);
+    cout<<coin_changingBFS(8, coins);
     // 7 not works for 1, 3, 4, 5
     
     return 0;

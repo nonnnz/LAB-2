@@ -36,7 +36,7 @@ int main() {
 
     vector<vector<int>> memo(n + 1, vector<int>(m + 1, -1));
 
-    cout << "(0,0) to (" << n << "," << m << "): " << minPathSum(arr, memo, n, m);
+    cout << minPathSum(arr, memo, n, m);
 
     return 0;
 }

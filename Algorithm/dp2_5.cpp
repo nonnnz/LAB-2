@@ -18,7 +18,7 @@ using namespace std;
 //     }
 // }
 
-void floydWarshall(vector<pair<int, int> > adj[], int V) {
+int floydWarshall(vector<pair<int, int> > adj[], int V, int flag[]) {
     int dist[V][V];
     int path[V][V];
     for(int i=0; i<V; i++) {
@@ -46,45 +46,46 @@ void floydWarshall(vector<pair<int, int> > adj[], int V) {
             }
         }
     }
-    for(int i=0; i<V; i++) {
-        for(int j=0; j<V; j++) {
-            cout << dist[i][j] << " ";
-        }
-        cout << endl;
-    }
+    // for(int i=0; i<V; i++) {
+    //     for(int j=0; j<V; j++) {
+    //         cout << dist[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
 
+    // for(int i=0; i<V; i++) {
+    //     for(int j=0; j<V; j++) {
+    //         cout << path[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    int t_f = 0;
+    int min_sum = INT_MAX;
+    int s_i = 0;
     for(int i=0; i<V; i++) {
+        int sum = 0;
+        if(i == flag[t_f] && t_f < V) {
+            t_f++;
+            continue;
+        }
+        int t_fj = 0;
         for(int j=0; j<V; j++) {
-            cout << path[i][j] << " ";
-        }
-        cout << endl;
-    }
-    // Path(path, 0, 3);
-    // find path
-    int u = 0;
-    int v = 3;
-    if(u == v) {
-        cout << u << " ";
-        return;
-    }
-    if(path[u][v] == -1) {
-        cout << "No path";
-        return;
-    } else {
-        int current = v;
-        while (current != u) {
-            current = path[u][current];
-            if (current == -1) {
-                cout << "No path";
-                return;
+            if (j == flag[t_fj] && t_fj < V) {
+                t_fj++;
+                continue;
             }
-            if (current == u) {
-                return;
-            }
-            cout << current << " ";
+            // cout << dist[i][j] << " ";
+            sum += dist[i][j];
         }
-        cout << v << " ";
+        // cout << sum << endl;
+        if(min_sum > sum) {
+            min_sum = sum;
+            s_i = i;
+        }
+        // cout << endl;
     }
+    return s_i;
 }
 
 void add_edge(vector<pair<int, int> > adj[], int u, int v, int w) {
@@ -99,6 +100,37 @@ void print_graph(vector<pair<int, int> > adj[], int n) {
             cout << "(" << x.first << ", " << x.second << ")";
         }
         cout << endl;
+    }
+}
+
+void add_new_edge(vector<pair<int, int> > adj[], int flag[], int n, int f, int n_h) {
+    for(int i=0; i<f; i++) {
+            for(auto x: adj[flag[i]]) {
+                int u = flag[i];
+                int v = x.first;
+                int w = x.second;
+                // check duplicate
+                bool duplicate = false;
+                for(auto y: adj[v]) {
+                    if(y.first == n_h) {
+                        duplicate = true;
+                        break;
+                    }
+                }
+                if(!duplicate) {
+                    adj[v].push_back({n_h, w});
+                    adj[n_h].push_back({v, w});
+                }
+
+        }
+    }
+}
+
+void copy_graph(vector<pair<int, int> > adj[], vector<pair<int, int> > adj_copy[], int n) {
+    for(int i=0; i<n; i++) {
+        for(auto x: adj[i]) {
+            adj_copy[i].push_back(x);
+        }
     }
 }
 
@@ -117,7 +149,21 @@ int main(){
         cin >> a >> b >> w;
         add_edge(adj, a-1, b-1, w);
     }
-    floydWarshall(adj, n);
+    int t_f = 0;
+    int min_sum = INT_MAX;
+    int min_index;
+    vector<pair<int, int> > adj_copy[n];
+    copy_graph(adj, adj_copy, n);
+    for(int i=0; i<n; i++) {
+        if(i == flag[t_f]) {
+            t_f++;
+            continue;
+        }
+        add_new_edge(adj_copy, flag, n, f, i);
+    }
+    cout << floydWarshall(adj_copy, n, flag)+1;
+    // cout << min_index;
+    
 
     return 0;
 }
