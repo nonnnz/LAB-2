@@ -24,17 +24,22 @@ void knapsack(int n, int W, int a[][2]) {
 	float ans[n]={0};
 	for(int i = 0; i<n; i++) {
 		w_cal += a[t_i[i]][0];
-		if(w_cal > W) {
-			w_cal-= a[t_i[i]][0];
-			int temp = a[t_i[i]][0]*((W-w_cal)/a[t_i[i]][0]);
-			w_cal += temp;
-			ans[t_i[i]] = ((W-w_cal)/(a[t_i[i]][0]+0.0));
-			int temp_p = a[t_i[i]][1]*((W-w_cal)/a[t_i[i]][1]);
-			p += ans[t_i[i]]*a[t_i[i]][1];
-			break;
-		}
+		// if(w_cal > W) {
+		// 	w_cal-= a[t_i[i]][0];
+		// 	int temp = a[t_i[i]][0]*((W-w_cal)/a[t_i[i]][0]);
+		// 	w_cal += temp;
+		// 	ans[t_i[i]] = ((W-w_cal)/(a[t_i[i]][0]+0.0));
+		// 	int temp_p = a[t_i[i]][1]*((W-w_cal)/a[t_i[i]][1]);
+		// 	p += ans[t_i[i]]*a[t_i[i]][1];
+		// 	break;
+		// }
 		ans[t_i[i]] = 1;
 		p += a[t_i[i]][1];
+		if(w_cal > W) {
+			w_cal-= a[t_i[i]][0];
+			p -= a[t_i[i]][1];
+			break;
+		}
 	}
 	
     for(int i=0; i<n; i++) {
@@ -44,11 +49,14 @@ void knapsack(int n, int W, int a[][2]) {
 }
 
 int main() {
-	int n, W;
-	cin >> n >> W;
-	int a[n][2];
-	for(int i=0; i<n; i++) cin >> a[i][0];
-	for(int j=0; j<n; j++) cin >> a[j][1];
+	// int n, W;
+	// cin >> n >> W;
+	// int a[n][2];
+	// for(int i=0; i<n; i++) cin >> a[i][0];
+	// for(int j=0; j<n; j++) cin >> a[j][1];
+	int n = 4;
+	int W = 18;
+	int a[][2] = {{8, 12}, {7, 5}, {4, 4}, {2, 2}};
 	// int n = 4;
 	// int W = 25;
 	// int a[][2] = {{18,25}, {15, 24}, {10, 5}, {5, 8}};

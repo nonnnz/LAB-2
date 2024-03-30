@@ -41,9 +41,11 @@ int knapsackTD(int wt[], int val[], int n, int w, vector<vector<int>>& memo) {
 
 int main() {
     int n = 4;
-    int w = 10;
-    int wt[] = {5, 4, 6, 3};
-    int val[] = {10, 40, 30, 50};
+    int w = 18;
+    // int wt[] = {5, 4, 6, 3};
+    // int val[] = {10, 40, 30, 50};
+    int val[] = {12, 5, 4, 2};
+    int wt[] = {8, 7, 4, 2};
     // knapsackBU(wt, val, n, w);
     vector<vector<int>> memo(n + 1, vector<int>(w + 1, -1));
     cout << knapsackTD(wt, val, n, w, memo);

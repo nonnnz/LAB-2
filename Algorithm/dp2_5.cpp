@@ -52,7 +52,39 @@ void floydWarshall(vector<pair<int, int> > adj[], int V) {
         }
         cout << endl;
     }
+
+    for(int i=0; i<V; i++) {
+        for(int j=0; j<V; j++) {
+            cout << path[i][j] << " ";
+        }
+        cout << endl;
+    }
     // Path(path, 0, 3);
+    // find path
+    int u = 0;
+    int v = 3;
+    if(u == v) {
+        cout << u << " ";
+        return;
+    }
+    if(path[u][v] == -1) {
+        cout << "No path";
+        return;
+    } else {
+        int current = v;
+        while (current != u) {
+            current = path[u][current];
+            if (current == -1) {
+                cout << "No path";
+                return;
+            }
+            if (current == u) {
+                return;
+            }
+            cout << current << " ";
+        }
+        cout << v << " ";
+    }
 }
 
 void add_edge(vector<pair<int, int> > adj[], int u, int v, int w) {
