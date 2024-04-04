@@ -21,6 +21,39 @@ int partition(int a[], int l, int r) {
     return j;
 }
 
+int partitionMid(int arr[],int l, int r) {
+    int m = (l + r) / 2;
+
+    int p_index;
+    if (arr[l] < arr[m] && arr[m] < arr[r])
+        p_index = m;
+    else if (arr[l] < arr[r] && arr[r] < arr[m])
+        p_index = r;
+    else
+        p_index = l;
+
+    swap(arr[l], arr[p_index]);
+    
+    int pivot, i, j; 
+    pivot = arr[l];
+    i = l;
+    j = r + 1;
+
+    while(1) {
+        do ++i; while(arr[i] <= pivot);
+        do --j; while(arr[j] > pivot);
+
+        cout << i << " " << j << endl;
+
+        if (i >= j) break;
+        swap(arr[i], arr[j]);
+    }
+
+    swap(arr[l], arr[j]);
+
+    return j;
+}
+
 void printA(int a[], int n=7) {
 	for(int i=0;i<n;i++) cout<<a[i]<<" ";
 }
@@ -31,8 +64,8 @@ int quick_select(int a[], int low, int high, int k, int count[]) {
     
     if (low <= high) {
         int p_index = partition(a, low, high);
-        printA(a);
-        cout<<endl<<a[p_index]<<endl;
+        // printA(a);
+        // cout<<endl<<a[p_index]<<endl;
         count[0]++;
         int L_size = p_index - low + 1;
 
@@ -78,18 +111,18 @@ void quickSort(int a[], int l, int r) {
 
 int main() {
 	int n, k;
-	// cin>>n>>k;
-	// int a[n];
-    n = 7, k = 3;
-    int a[] = {1,5,10,4,8,2,6};
-	// for(int i=0; i<n; i++) cin>>a[i];
+	cin>>n>>k;
+	int a[n];
+    // n = 7, k = 3;
+    // int a[] = {1,5,10,4,8,2,6};
+	for(int i=0; i<n; i++) cin>>a[i];
     // int a[] = {1, 5, 10, 4, 8, 2, 6, 9, 20};
     // int k = 1;
     // int n = sizeof(a) / sizeof(a[0]);
 	
     // cout<<kthSmallest(a, 0, n-1, k);
     int count[1];
-    count[0] = 1;
+    count[0] = 0;
     cout<<quick_select(a, 0, n-1, k, count)<<" "<<count[0];
 	// cout<<quick_select(a, 0, n, k);
     // quickSort(a, 0, n-1);
