@@ -2,36 +2,40 @@
 
 using namespace std;
 
-int partitionRight(int arr[], int l, int r) {
-    int pivot, i, j;
-    pivot = arr[r];
-    i = l ;
 
-    for (j = l; j <= r-1; j++) {
-        if (arr[j] <= pivot) {
-            swap(arr[i], arr[j]);
+int partition2(int a[], int l, int r) {
+    int pivot, i, j, t;
+    pivot = a[r];
+    i = l;
+
+    for(int j = l; j <= r - 1; j++) {
+        if(a[j] <= pivot) {
+            swap(a[i], a[j]);
             i++;
         }
     }
-
-    swap(arr[i], arr[r]);
-
+    swap(a[i], a[r]);
     return i;
 }
 
 int quick_select(int a[], int low, int high, int k, int& count) {
     if (k > 0 && k <= high - low + 1) {
-        int p_index = partitionRight(a, low, high);
+        int p_index = partition2(a, low, high);
        
-        int L_size = p_index - low + 1;
+        // printA(a);
+        // cout<<endl<<a[p_index]<<endl;
 
-        if (k == L_size) {
-
+        if (k - 1 == p_index - low) {
+            // count[0]++;
+            // count_partition++;
             return a[p_index];
         }
+
         count++;
-        if (k < L_size)
+
+        if (p_index - low > k - 1)
         {
+            // count_partition++;
             return quick_select(a, low, p_index - 1, k, count);
         }
         return quick_select(a, p_index + 1, high, k - p_index + low - 1, count);
@@ -47,7 +51,9 @@ int main() {
 	for(int i=0; i<n; i++) cin>>a[i];
 
     int count = 0;
-    cout<<quick_select(a, 0, n-1, k, count)<<" "<<count;
+    int kth = quick_select(a, 0, n-1, k, count);
+    cout<<kth<<" "<<count;
+
 
     return 0;
 }
